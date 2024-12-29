@@ -1,0 +1,5 @@
+{
+    "ignore": ["node_modules/"],
+    "ext": "ts,js,json",
+    "exec": "ts-node bot.ts"
+}
