@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import language from './utils/language';
 import keyboards from './utils/keyboards';
 import { MyContext, SessionData } from './shared/types';
-import { selected_language, start } from './controller/main';
+import { instagram_downloader, selected_language, start, youtube_downloader } from './controller/main';
 import subscriptionChecker from './middlewares/subscriptionChecker';
 import hrefChecker from './middlewares/hrefChecker';
 
@@ -20,6 +20,22 @@ bot.command('start', async (ctx) => {
         start(ctx)
     }
 });
+
+bot.command('audio', async (ctx) => {
+    const href = ctx.message?.text.split(' ')[1]
+    if (href) {
+        switch (hrefChecker(ctx, href)) {
+            case 'Youtube':
+                youtube_downloader(ctx, href)
+                break
+            case 'Instagram':
+                instagram_downloader(ctx, href)
+                break
+        }
+    } else {
+        ctx.reply(language()[ctx.session.language].command_error_message, { parse_mode: 'HTML' })
+    }
+})
 
 bot.command('set_language', async (ctx) => {
     if (ctx.message?.text.split(' ')[1]) {
@@ -39,18 +55,30 @@ bot.command('set_language', async (ctx) => {
 })
 
 bot.command('help', async (ctx) => {
-    
+    ctx.reply(language()[ctx.session.language].help_command_message, { parse_mode: 'HTML' })
 })
 
-bot.on('message', subscriptionChecker, (ctx) => {
+bot.on(['message::url', 'message::text_link'], subscriptionChecker, (ctx) => {
     try {
-        if (typeof ctx.message.text == 'string') {
-            hrefChecker(ctx, ctx.message.text)
+    const href = ctx.message?.text
+    if (href) {
+        switch (hrefChecker(ctx, href)) {
+            case 'Youtube':
+                youtube_downloader(ctx, href)
+                break
+            case 'Instagram':
+                instagram_downloader(ctx, href)
+                break
         }
+    }
     } catch (err) {
         console.log(err)
     }
 });
+
+bot.on('message', (ctx) => {
+    ctx.reply(language()[ctx.session.language].message_handler, { parse_mode: 'HTML' })
+})
 
 bot.on('callback_query', async (ctx) => {
     const message = ctx.callbackQuery.message;

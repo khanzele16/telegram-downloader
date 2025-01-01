@@ -11,6 +11,10 @@ interface LanguageData {
         youtube_error_message: string;
         command_error_message: string;
         help_command_message: string;
+        video_loading_message: string;
+        video_size_error_message: string;
+        success_loading_message: string;
+        message_handler: string;
     };
     eng: {
         start_message: string;
@@ -24,6 +28,10 @@ interface LanguageData {
         youtube_error_message: string;
         command_error_message: string;
         help_command_message: string;
+        video_loading_message: string;
+        video_size_error_message: string;
+        success_loading_message: string;
+        message_handler: string;
     };
 }
 
@@ -52,7 +60,19 @@ export default (name?: string): LanguageData => {
             middleware_href_error_message: 'Проверьте корректность ссылки и <b>попробуйте снова</b>',
             youtube_error_message: 'Не удалось установить видео. <b>Попробовать снова</b>',
             command_error_message: 'Не удалось выполнить команду. <b>Чтобы узнать какие команды есть у бота, используйте /help</b>',
-            help_command_message: 'Поддержка - @khanzele',
+            help_command_message: `<b>🤖 Поддержка - @khanzele</b>
+
+<b>Как использовать команды:</b>
+🌎 <b><i>/set_language</i></b> — Сменить язык.
+<code>/set_language ru (en)</code> или <code>/set_language rus (eng)</code> <b>для смены языка.</b>
+
+🎧 <b><i>/audio</i></b> — Скачать в аудио.
+<code>/audio (href)</code> <b>для скачивания видео в аудио-формате.</b>
+`,
+            video_loading_message: '⏳ <b>Загрузка видео...</b>',
+            video_size_error_message: '<b>Размер видео больше 50 МБ.</b> Такие видео не поддерживаются нашим ботом из-за слишком большой задержки 😔',
+            success_loading_message: '<b>🤖 Видео скачано с помощью <a href="https://t.me/tgkdownloader_bot">этого бота</a></b>',
+            message_handler: 'Скинь ссылку твоего <b>Reels или Shorts</b> для того, чтобы я скачал его.'
         },
         eng: {
             start_message: `Hello, @${name}! I’m your bot for downloading videos and audio. Here’s what I can do:
@@ -76,7 +96,18 @@ Happy downloading! 🚀`,
             middleware_href_error_message: 'Check the link and <b>Try again</b>',
             youtube_error_message: 'Failed to fetch the video. <b>Try again</b>',
             command_error_message: 'Could not execute the command. <b>To see the available commands, use /help</b>',
-            help_command_message: ''
+            help_command_message: `<b>🤖 Support - @khanzele</b>
+
+<b>How to use commands:</b>
+🌎 <b><i>/set_language</i></b> — Switches Language.
+<code>/set_language ru (en)</code> or <code>/set_language rus (eng)</code> <b>to switch language.</b>
+
+🎧 <b><i>/audio</i></b>  — Download in audio.
+<code>/audio (href)</code> <b>to download video in audio-format.</b>`,
+            video_loading_message: '⏳ <b>Loading video...</b>',
+            video_size_error_message: '<b>The video size exceeds 50 MB.</b> These videos are not supported by our bot due to the high delay 😔',
+            success_loading_message: '<b>🤖 Video loaded with <a href="https://t.me/tgkdownloader_bot">that bot</a></b>',
+            message_handler: 'Send me a link from <b>Reels or Shorts</b> to download it.'
         }
     }
 }
